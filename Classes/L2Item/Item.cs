@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Drawing;
+using System.IO;
 
 namespace MSDesigner.Classes.L2Item
 {
@@ -27,5 +29,21 @@ namespace MSDesigner.Classes.L2Item
         [XmlIgnore]
         [JsonProperty(Required = Required.Default)]
         public Dictionary<string, string> Params { get; set; }
+
+        /// <summary>
+        /// Return image file for current Item
+        /// </summary>
+        /// <param name="pathToIcons">Global path from config</param>
+        /// <param name="iconFormat">Format of image file</param>
+        /// <returns>Image object</returns>
+        public Image GetIconImage(string pathToIcons, string iconFormat = "png")
+        {
+            string path = string.Format(@"{0}\{1}.{2}", pathToIcons, this.Icon, iconFormat);
+
+            if (File.Exists(path))
+                return Image.FromFile(path);
+
+            return Properties.Resources.no_icon;
+        }
     }
 }

@@ -78,6 +78,7 @@
             this.ButtonAddMSItemToMSList = new System.Windows.Forms.Button();
             this.PanelMSItems = new System.Windows.Forms.Panel();
             this.ButtonClearMSItem = new System.Windows.Forms.Button();
+            this.ButtonExit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -262,7 +263,7 @@
             // 
             // itemBindingSource
             // 
-            this.itemBindingSource.DataSource = typeof(MSDesigner.Classes.DPackage.Item);
+            this.itemBindingSource.DataSource = typeof(MSDesigner.Classes.DataPackage.Item);
             // 
             // ComboBoxPager
             // 
@@ -331,7 +332,7 @@
             // 
             // ButtonViewDetails
             // 
-            this.ButtonViewDetails.Location = new System.Drawing.Point(358, 13);
+            this.ButtonViewDetails.Location = new System.Drawing.Point(970, 13);
             this.ButtonViewDetails.Name = "ButtonViewDetails";
             this.ButtonViewDetails.Size = new System.Drawing.Size(119, 50);
             this.ButtonViewDetails.TabIndex = 17;
@@ -426,14 +427,14 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.editToolStripMenuItem.Text = "Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.EditMSItemToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.RemoveMSItemToolStripMenuItem_Click);
             // 
             // ButtonMSGridUp
             // 
@@ -469,7 +470,7 @@
             this.LabelCopyright.Size = new System.Drawing.Size(551, 13);
             this.LabelCopyright.TabIndex = 25;
             this.LabelCopyright.Text = "Lineage II is a trademark of NCsoft Corporation. Copyright © NCsoft Corporation 2" +
-                "005-2013. All rights reserved.";
+    "005-2013. All rights reserved.";
             // 
             // ButtonSaveMSList
             // 
@@ -615,12 +616,23 @@
             this.ButtonClearMSItem.UseVisualStyleBackColor = true;
             this.ButtonClearMSItem.Click += new System.EventHandler(this.ButtonClearMSItem_Click);
             // 
+            // ButtonExit
+            // 
+            this.ButtonExit.Location = new System.Drawing.Point(1095, 13);
+            this.ButtonExit.Name = "ButtonExit";
+            this.ButtonExit.Size = new System.Drawing.Size(119, 50);
+            this.ButtonExit.TabIndex = 31;
+            this.ButtonExit.Text = "Exit";
+            this.ButtonExit.UseVisualStyleBackColor = true;
+            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1226, 702);
+            this.Controls.Add(this.ButtonExit);
             this.Controls.Add(this.ButtonClearMSItem);
             this.Controls.Add(this.LabelCopyright);
             this.Controls.Add(this.PanelMSGrid);
@@ -715,6 +727,7 @@
         private System.Windows.Forms.Button ButtonClearMSItem;
         private System.Windows.Forms.TextBox TextBoxMSName;
         private System.Windows.Forms.Label LabelXMLExt;
+        private System.Windows.Forms.Button ButtonExit;
 
     }
 }

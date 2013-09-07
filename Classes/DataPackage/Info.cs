@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MSDesigner.Classes.DPackage
+namespace MSDesigner.Classes.DataPackage
 {
     class Info
     {

@@ -83,11 +83,12 @@
     <Compile Include="Classes\Controls\MSItemView.Designer.cs">
       <DependentUpon>MSItemView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\DPackage\Author.cs" />
-    <Compile Include="Classes\DPackage\DPackage.cs" />
-    <Compile Include="Classes\DPackage\Info.cs" />
-    <Compile Include="Classes\DPackage\Item.cs" />
-    <Compile Include="Classes\DPackage\ItemsList.cs" />
+    <Compile Include="Classes\DataPackage\Author.cs" />
+    <Compile Include="Classes\DataPackage\Package.cs" />
+    <Compile Include="Classes\DataPackage\Info.cs" />
+    <Compile Include="Classes\DataPackage\Item.cs" />
+    <Compile Include="Classes\DataPackage\ItemsList.cs" />
+    <Compile Include="Classes\L2Item\List.cs" />
     <Compile Include="Classes\MultiSell\MSConfig.cs" />
     <Compile Include="Classes\MultiSell\MSItem.cs" />
     <Compile Include="Classes\MultiSell\L2Item.cs" />

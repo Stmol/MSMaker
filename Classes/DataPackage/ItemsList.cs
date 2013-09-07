@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using DPackage = MSDesigner.Classes.DPackage;
+using DPackage = MSDesigner.Classes.DataPackage;
 using L2Item = MSDesigner.Classes.L2Item;
 
-namespace MSDesigner.Classes.DPackage
+namespace MSDesigner.Classes.DataPackage
 {
     /**
      * 
      * TODO: Learn about ICloneable interface!
      */
+    [System.Obsolete("Use L2Item.List", true)]
     class ItemsList : ICloneable
     {
         public string Name { get; set; }

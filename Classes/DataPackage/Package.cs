@@ -3,9 +3,9 @@ using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-namespace MSDesigner.Classes.DPackage
+namespace MSDesigner.Classes.DataPackage
 {
-    class Config
+    class Package
     {
         [JsonProperty(Required = Required.Always)]
         public string Name { get; set; }
@@ -17,18 +17,18 @@ namespace MSDesigner.Classes.DPackage
         public string License { get; set; }
 
         [JsonProperty(Required = Required.Always)]
-        public IList<Author> Authors { get; set; }
+        public List<Author> Authors { get; set; }
 
         [JsonProperty(Required = Required.Always)]
         public Info Info { get; set; }
 
         [JsonProperty(Required = Required.Always)]
-        public IList<Item> Items { get; set; }
+        public List<Item> Items { get; set; }
 
         [JsonProperty(Required = Required.Default)]
         public string Icons { get; set; }
 
-        public static Config ReadConfigFile(string configFileName)
+        public static Package ReadConfigFile(string configFileName)
         {
             if (!File.Exists(string.Format(@"{0}\{1}", Application.StartupPath, configFileName)))
             {
@@ -38,7 +38,7 @@ namespace MSDesigner.Classes.DPackage
 
             try
             {
-                return JsonConvert.DeserializeObject<Config>(File.ReadAllText(configFileName));
+                return JsonConvert.DeserializeObject<Package>(File.ReadAllText(configFileName));
             }
             catch (JsonSerializationException e)
             {
@@ -49,6 +49,7 @@ namespace MSDesigner.Classes.DPackage
             return null;
         }
 
+        [System.Obsolete("Use L2Item.GetIconImage")]
         public string GetPathToIcon(string iconName, string iconFormat = "png")
         {
             return string.Format(@"{0}\{1}.{2}", this.Icons, iconName, iconFormat);
