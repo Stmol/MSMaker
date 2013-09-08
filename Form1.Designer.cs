@@ -33,8 +33,8 @@
             this.ColumnItemName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnItemId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ItemsIconList = new System.Windows.Forms.ImageList(this.components);
-            this.buttonNextItemList = new System.Windows.Forms.Button();
-            this.buttonPrevItemList = new System.Windows.Forms.Button();
+            this.ButtonNextItemListPage = new System.Windows.Forms.Button();
+            this.ButtonPrevItemListPage = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ButtonCopyItemID = new System.Windows.Forms.Button();
             this.TextBoxItemParams = new System.Windows.Forms.TextBox();
@@ -45,7 +45,7 @@
             this.labelItemId = new System.Windows.Forms.Label();
             this.labelItemDesc = new System.Windows.Forms.Label();
             this.labelItemName = new System.Windows.Forms.Label();
-            this.ComboBoxListName = new System.Windows.Forms.ComboBox();
+            this.ComboBoxPackageItemName = new System.Windows.Forms.ComboBox();
             this.itemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ComboBoxPager = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -53,7 +53,7 @@
             this.ButtonSearchClear = new System.Windows.Forms.Button();
             this.LinkStmol = new System.Windows.Forms.LinkLabel();
             this.LabelBy = new System.Windows.Forms.Label();
-            this.ButtonViewDetails = new System.Windows.Forms.Button();
+            this.ButtonChangeItemsListView = new System.Windows.Forms.Button();
             this.DEVBUTTON = new System.Windows.Forms.Button();
             this.ListBoxFiltersTip = new System.Windows.Forms.ListBox();
             this.PictureBoxMSGrid = new System.Windows.Forms.PictureBox();
@@ -79,6 +79,7 @@
             this.PanelMSItems = new System.Windows.Forms.Panel();
             this.ButtonClearMSItem = new System.Windows.Forms.Button();
             this.ButtonExit = new System.Windows.Forms.Button();
+            this.LabelDataPackageDisable = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -126,25 +127,25 @@
             this.ItemsIconList.ImageSize = new System.Drawing.Size(32, 32);
             this.ItemsIconList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // buttonNextItemList
+            // ButtonNextItemListPage
             // 
-            this.buttonNextItemList.Location = new System.Drawing.Point(244, 4);
-            this.buttonNextItemList.Name = "buttonNextItemList";
-            this.buttonNextItemList.Size = new System.Drawing.Size(81, 40);
-            this.buttonNextItemList.TabIndex = 3;
-            this.buttonNextItemList.Text = "Next »";
-            this.buttonNextItemList.UseVisualStyleBackColor = true;
-            this.buttonNextItemList.Click += new System.EventHandler(this.buttonNextItemList_Click);
+            this.ButtonNextItemListPage.Location = new System.Drawing.Point(244, 4);
+            this.ButtonNextItemListPage.Name = "ButtonNextItemListPage";
+            this.ButtonNextItemListPage.Size = new System.Drawing.Size(81, 40);
+            this.ButtonNextItemListPage.TabIndex = 3;
+            this.ButtonNextItemListPage.Text = "Next »";
+            this.ButtonNextItemListPage.UseVisualStyleBackColor = true;
+            this.ButtonNextItemListPage.Click += new System.EventHandler(this.buttonNextItemList_Click);
             // 
-            // buttonPrevItemList
+            // ButtonPrevItemListPage
             // 
-            this.buttonPrevItemList.Location = new System.Drawing.Point(0, 4);
-            this.buttonPrevItemList.Name = "buttonPrevItemList";
-            this.buttonPrevItemList.Size = new System.Drawing.Size(81, 40);
-            this.buttonPrevItemList.TabIndex = 4;
-            this.buttonPrevItemList.Text = "« Prev";
-            this.buttonPrevItemList.UseVisualStyleBackColor = true;
-            this.buttonPrevItemList.Click += new System.EventHandler(this.buttonPrevItemList_Click);
+            this.ButtonPrevItemListPage.Location = new System.Drawing.Point(0, 4);
+            this.ButtonPrevItemListPage.Name = "ButtonPrevItemListPage";
+            this.ButtonPrevItemListPage.Size = new System.Drawing.Size(81, 40);
+            this.ButtonPrevItemListPage.TabIndex = 4;
+            this.ButtonPrevItemListPage.Text = "« Prev";
+            this.ButtonPrevItemListPage.UseVisualStyleBackColor = true;
+            this.ButtonPrevItemListPage.Click += new System.EventHandler(this.buttonPrevItemList_Click);
             // 
             // groupBox1
             // 
@@ -246,20 +247,21 @@
             this.labelItemName.TabIndex = 0;
             this.labelItemName.Text = "Name";
             // 
-            // ComboBoxListName
+            // ComboBoxPackageItemName
             // 
-            this.ComboBoxListName.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComboBoxListName.DataSource = this.itemBindingSource;
-            this.ComboBoxListName.DisplayMember = "Name";
-            this.ComboBoxListName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxListName.FormattingEnabled = true;
-            this.ComboBoxListName.ItemHeight = 14;
-            this.ComboBoxListName.Location = new System.Drawing.Point(14, 13);
-            this.ComboBoxListName.MaxDropDownItems = 10;
-            this.ComboBoxListName.Name = "ComboBoxListName";
-            this.ComboBoxListName.Size = new System.Drawing.Size(325, 22);
-            this.ComboBoxListName.TabIndex = 9;
-            this.ComboBoxListName.ValueMember = "Name";
+            this.ComboBoxPackageItemName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComboBoxPackageItemName.DataSource = this.itemBindingSource;
+            this.ComboBoxPackageItemName.DisplayMember = "Name";
+            this.ComboBoxPackageItemName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxPackageItemName.FormattingEnabled = true;
+            this.ComboBoxPackageItemName.ItemHeight = 14;
+            this.ComboBoxPackageItemName.Location = new System.Drawing.Point(14, 13);
+            this.ComboBoxPackageItemName.MaxDropDownItems = 10;
+            this.ComboBoxPackageItemName.Name = "ComboBoxPackageItemName";
+            this.ComboBoxPackageItemName.Size = new System.Drawing.Size(325, 22);
+            this.ComboBoxPackageItemName.TabIndex = 9;
+            this.ComboBoxPackageItemName.ValueMember = "Name";
+            this.ComboBoxPackageItemName.SelectedIndexChanged += new System.EventHandler(this.ComboBoxListName_SelectedIndexChanged);
             // 
             // itemBindingSource
             // 
@@ -276,9 +278,9 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.buttonPrevItemList);
+            this.panel1.Controls.Add(this.ButtonPrevItemListPage);
             this.panel1.Controls.Add(this.ComboBoxPager);
-            this.panel1.Controls.Add(this.buttonNextItemList);
+            this.panel1.Controls.Add(this.ButtonNextItemListPage);
             this.panel1.Location = new System.Drawing.Point(14, 632);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(325, 48);
@@ -330,15 +332,15 @@
             this.LabelBy.TabIndex = 16;
             this.LabelBy.Text = "MSDesigner is developed by";
             // 
-            // ButtonViewDetails
+            // ButtonChangeItemsListView
             // 
-            this.ButtonViewDetails.Location = new System.Drawing.Point(970, 13);
-            this.ButtonViewDetails.Name = "ButtonViewDetails";
-            this.ButtonViewDetails.Size = new System.Drawing.Size(119, 50);
-            this.ButtonViewDetails.TabIndex = 17;
-            this.ButtonViewDetails.Text = "Change View";
-            this.ButtonViewDetails.UseVisualStyleBackColor = true;
-            this.ButtonViewDetails.Click += new System.EventHandler(this.ChangeViewInItemList_Click);
+            this.ButtonChangeItemsListView.Location = new System.Drawing.Point(970, 13);
+            this.ButtonChangeItemsListView.Name = "ButtonChangeItemsListView";
+            this.ButtonChangeItemsListView.Size = new System.Drawing.Size(119, 50);
+            this.ButtonChangeItemsListView.TabIndex = 17;
+            this.ButtonChangeItemsListView.Text = "Change View";
+            this.ButtonChangeItemsListView.UseVisualStyleBackColor = true;
+            this.ButtonChangeItemsListView.Click += new System.EventHandler(this.ChangeViewInItemList_Click);
             // 
             // DEVBUTTON
             // 
@@ -626,12 +628,26 @@
             this.ButtonExit.UseVisualStyleBackColor = true;
             this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
+            // LabelDataPackageDisable
+            // 
+            this.LabelDataPackageDisable.AutoSize = true;
+            this.LabelDataPackageDisable.BackColor = System.Drawing.SystemColors.Control;
+            this.LabelDataPackageDisable.Enabled = false;
+            this.LabelDataPackageDisable.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.LabelDataPackageDisable.Location = new System.Drawing.Point(106, 341);
+            this.LabelDataPackageDisable.Name = "LabelDataPackageDisable";
+            this.LabelDataPackageDisable.Size = new System.Drawing.Size(140, 14);
+            this.LabelDataPackageDisable.TabIndex = 32;
+            this.LabelDataPackageDisable.Text = "Data Package not found";
+            this.LabelDataPackageDisable.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1226, 702);
+            this.Controls.Add(this.LabelDataPackageDisable);
             this.Controls.Add(this.ButtonExit);
             this.Controls.Add(this.ButtonClearMSItem);
             this.Controls.Add(this.LabelCopyright);
@@ -644,10 +660,10 @@
             this.Controls.Add(this.GroupBoxMultiSell);
             this.Controls.Add(this.ButtonSearchClear);
             this.Controls.Add(this.ButtonMSGridUp);
-            this.Controls.Add(this.ButtonViewDetails);
+            this.Controls.Add(this.ButtonChangeItemsListView);
             this.Controls.Add(this.TextBoxSearch);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.ComboBoxListName);
+            this.Controls.Add(this.ComboBoxPackageItemName);
             this.Controls.Add(this.ItemsListView);
             this.Controls.Add(this.DEVBUTTON);
             this.Controls.Add(this.groupBox1);
@@ -679,8 +695,8 @@
         #endregion
 
         private System.Windows.Forms.ListView ItemsListView;
-        private System.Windows.Forms.Button buttonNextItemList;
-        private System.Windows.Forms.Button buttonPrevItemList;
+        private System.Windows.Forms.Button ButtonNextItemListPage;
+        private System.Windows.Forms.Button ButtonPrevItemListPage;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label labelItemName;
         private System.Windows.Forms.TextBox textBoxItemId;
@@ -688,7 +704,7 @@
         private System.Windows.Forms.Label labelItemId;
         private System.Windows.Forms.TextBox textBoxItemDesc;
         private System.Windows.Forms.Label labelItemDesc;
-        private System.Windows.Forms.ComboBox ComboBoxListName;
+        private System.Windows.Forms.ComboBox ComboBoxPackageItemName;
         private System.Windows.Forms.BindingSource itemBindingSource;
         private System.Windows.Forms.ImageList ItemsIconList;
         private System.Windows.Forms.ComboBox ComboBoxPager;
@@ -701,7 +717,7 @@
         private System.Windows.Forms.Label LabelBy;
         private System.Windows.Forms.ColumnHeader ColumnItemName;
         private System.Windows.Forms.ColumnHeader ColumnItemId;
-        private System.Windows.Forms.Button ButtonViewDetails;
+        private System.Windows.Forms.Button ButtonChangeItemsListView;
         private System.Windows.Forms.Button DEVBUTTON;
         private System.Windows.Forms.ListBox ListBoxFiltersTip;
         private System.Windows.Forms.PictureBox PictureBoxMSGrid;
@@ -728,6 +744,7 @@
         private System.Windows.Forms.TextBox TextBoxMSName;
         private System.Windows.Forms.Label LabelXMLExt;
         private System.Windows.Forms.Button ButtonExit;
+        private System.Windows.Forms.Label LabelDataPackageDisable;
 
     }
 }

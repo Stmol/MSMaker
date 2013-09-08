@@ -41,7 +41,7 @@ namespace MSDesigner
             this._msList = new MultiSell.List();
 
             // If defined some items
-            if (this._package.Items.Count > 0)
+            if (this._package != null && this._package.Items.Count > 0)
             {
                 this._itemsLists = new List<L2Item.List>();
 
@@ -65,27 +65,25 @@ namespace MSDesigner
                     }
                 }
 
-                // Make "All" tab
+                // Make "All" list
                 this._itemsLists.Insert(0, allItems);
-            }
-            else
-            {
-                // TODO: Catch it!
-                throw new Exception("Package does not contain any data");
+                this._currentList = this._itemsLists[0];
             }
 
             // Init events
-            this.ComboBoxListName.SelectedIndexChanged += new EventHandler(ComboBoxListName_SelectedIndexChanged);
             this.TableLayoutPanelMSItem.ControlAdded += new ControlEventHandler(TableLayoutPanelMSItem_ControlAdded);
             this.TableLayoutPanelMSItem.ControlRemoved += new ControlEventHandler(TableLayoutPanelMSItem_ControlRemoved);
             this.TableLayoutMSList.ControlAdded += new ControlEventHandler(TableLayoutMSList_ControlAdded);
             this.TableLayoutMSList.ControlRemoved += new ControlEventHandler(TableLayoutMSList_ControlRemoved);
 
-            this.ComboBoxListName.DataSource = this._itemsLists;
+            // Init controls
+            this.InitControls();
         }
 
         private void DisplayItemsInListView(int start)
         {
+            Debug.WriteLine("Display items");
+
             this.ItemsListView.Items.Clear();
             this.ItemsListView.LargeImageList.Images.Clear();
 
@@ -94,26 +92,68 @@ namespace MSDesigner
 
         private void InitControls()
         {
+            #region Default Controls State
+            // Pager
+            this.ButtonNextItemListPage.Enabled = false;
+            this.ButtonPrevItemListPage.Enabled = false;
+
+            // ComboBox
+            this.ComboBoxPager.Enabled = false;
+            this.ComboBoxPackageItemName.Enabled = false;
+
+            // Search controls
+            this.TextBoxSearch.Enabled = false;
+            this.ButtonSearchClear.Enabled = false;
+
+            // Other controls
+            this.ButtonChangeItemsListView.Enabled = false;
+            this.ItemsListView.Enabled = false;
+            this.LabelDataPackageDisable.Visible = true;
+            #endregion
+
+            // If DataPackage loaded
+            if (this._package != null)
+            {
+                this.InitPager();
+
+                this.LabelDataPackageDisable.Visible = false;
+
+                // Search controls
+                this.TextBoxSearch.Enabled = true;
+                this.ButtonSearchClear.Enabled = true;
+
+                this.ComboBoxPackageItemName.DataSource = this._itemsLists;
+                this.ComboBoxPackageItemName.Enabled = true;
+
+                this.ButtonChangeItemsListView.Enabled = true;
+                this.ItemsListView.Enabled = true;
+            }
+        }
+
+        private void InitPager()
+        {
             int maxPagesCount = (int)Math.Ceiling((decimal)this._currentList.Items.Count / (decimal)this._maxPerPage);
 
             this.ComboBoxPager.Items.Clear();
             this.ComboBoxPager.Enabled = true;
 
-            this.buttonNextItemList.Enabled = true;
-            this.buttonPrevItemList.Enabled = true;
+            this.ButtonNextItemListPage.Enabled = true;
+            this.ButtonPrevItemListPage.Enabled = true;
 
             if (maxPagesCount <= 1)
             {
                 maxPagesCount = 1;
 
-                this.buttonNextItemList.Enabled = false;
-                this.buttonPrevItemList.Enabled = false;
                 this.ComboBoxPager.Enabled = false;
+
+                this.ButtonNextItemListPage.Enabled = false;
+                this.ButtonPrevItemListPage.Enabled = false;
             }
 
             for (int i = 1; i <= maxPagesCount; i++)
                 this.ComboBoxPager.Items.Add(i.ToString());
 
+            // TODO: I really doubt that it must be here
             this.ComboBoxPager.SelectedIndex = 0;
         }
 
@@ -124,16 +164,14 @@ namespace MSDesigner
             DisplayItemsInListView(this._currentPage * this._maxPerPage);
 
             if (this._currentPage > 0)
-                this.buttonPrevItemList.Enabled = true;
+                this.ButtonPrevItemListPage.Enabled = true;
             else
-                this.buttonPrevItemList.Enabled = false;
+                this.ButtonPrevItemListPage.Enabled = false;
 
-            int maxPagesCount = (int)Math.Ceiling((decimal)this._currentList.Items.Count / (decimal)this._maxPerPage);
-
-            if (this._currentPage >= maxPagesCount - 1)
-                this.buttonNextItemList.Enabled = false;
+            if ((this.ComboBoxPager.SelectedIndex + 1) >= this.ComboBoxPager.Items.Count)
+                this.ButtonNextItemListPage.Enabled = false;
             else
-                this.buttonNextItemList.Enabled = true;
+                this.ButtonNextItemListPage.Enabled = true;
         }
 
         private void ItemsListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -160,25 +198,29 @@ namespace MSDesigner
             }
         }
 
-        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Filter current list
+        /// </summary>
+        /// <param name="filterQuery">Filter query string</param>
+        private void FilterCurrentList(string filterQuery = "")
         {
-            if (this.TextBoxSearch.Text == "ID or Name")
-                return;
+            this._currentList = (L2Item.List)this._itemsLists
+                                    .Find(i => i.Name == this.ComboBoxPackageItemName.SelectedValue.ToString())
+                                    .Clone();
 
-            string searchQuery = this.TextBoxSearch.Text.Trim().ToLower();
-            double id;
+            if (filterQuery != "")
+            {
+                double id;
 
-            // TODO: Make single refresh method!
-            this._currentList = (L2Item.List)this._itemsLists.Find(i => i.Name == this.ComboBoxListName.SelectedValue.ToString()).Clone();
+                if (double.TryParse(filterQuery, out id))
+                    this._currentList.Items = this._currentList.Items.Where(i => i.Id == id).ToList();
+                else
+                    this._currentList.Items = this._currentList.Items
+                                                .FindAll(i => i.Name.ToLower().Contains(filterQuery))
+                                                .ToList();
+            }
 
-            if (double.TryParse(searchQuery, out id))
-                this._currentList.Items = this._currentList.Items.Where(i => i.Id == id).ToList();
-            else
-                this._currentList.Items = this._currentList.Items
-                                                           .FindAll(i => i.Name.ToLower().Contains(searchQuery))
-                                                           .ToList();
-
-            this.InitControls();
+            this.InitPager();
         }
 
         private void ClearSearchQuery()
@@ -401,6 +443,14 @@ namespace MSDesigner
 
         #region Distractions events
 
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (this.TextBoxSearch.Text == "ID or Name")
+                return;
+
+            this.FilterCurrentList(this.TextBoxSearch.Text.Trim().ToLower());
+        }
+
         private void ButtonCopyItemID_Click(object sender, EventArgs e)
         {
             if (this.textBoxItemId.Text != "")
@@ -459,7 +509,9 @@ namespace MSDesigner
         // HACK: Dev env
         private void DEVBUTTON_CLICK(object sender, EventArgs e)
         {
-
+            ItemDetails itemDetailsForm = new ItemDetails();
+            itemDetailsForm.Show();
+            itemDetailsForm.Location = new Point(DEVBUTTON.Left, DEVBUTTON.Top);
         }
 
         private void TextBoxSearch_Leave(object sender, EventArgs e)
@@ -473,7 +525,9 @@ namespace MSDesigner
 
         private void TextBoxSearch_Enter(object sender, EventArgs e)
         {
-            this.TextBoxSearch.Text = "";
+            if (this.TextBoxSearch.Text == "ID or Name")
+                this.TextBoxSearch.Text = "";
+
             this.TextBoxSearch.ForeColor = System.Drawing.SystemColors.ControlText;
         }
 
@@ -562,10 +616,12 @@ namespace MSDesigner
 
         void ComboBoxListName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this._currentList = (L2Item.List)this._itemsLists.Find(i => i.Name == this.ComboBoxListName.SelectedValue.ToString()).Clone();
+            string searchQuery = string.Empty;
 
-            this.ClearSearchQuery();
-            this.InitControls();
+            if (this.TextBoxSearch.Text != "" && this.TextBoxSearch.Text != "ID or Name")
+                searchQuery = this.TextBoxSearch.Text.ToLower();
+
+            this.FilterCurrentList(searchQuery);
         }
 
         private void LinkStmol_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

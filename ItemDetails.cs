@@ -8,5 +8,10 @@ namespace MSDesigner
         {
             InitializeComponent();
         }
+
+        private void ButtonCloseWindow_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

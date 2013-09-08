@@ -31,10 +31,7 @@ namespace MSDesigner.Classes.DataPackage
         public static Package ReadConfigFile(string configFileName)
         {
             if (!File.Exists(string.Format(@"{0}\{1}", Application.StartupPath, configFileName)))
-            {
-                MessageBox.Show("Config file doesnt exists", "Error IO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
-            }
 
             try
             {
