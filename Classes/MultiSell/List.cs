@@ -7,15 +7,15 @@ namespace MSDesigner.Classes.MultiSell
     public class List
     {
         [XmlElement("config")]
-        public MSConfig Config { get; set; }
+        public Config Config { get; set; }
 
         [XmlElement("item")]
-        public List<MSItem> Items { get; set; }
+        public List<Item> Items { get; set; }
 
         public List()
         {
-            this.Config = new MSConfig();
-            this.Items = new List<MSItem>();
+            this.Config = new Config();
+            this.Items = new List<Item>();
         }
     }
 }

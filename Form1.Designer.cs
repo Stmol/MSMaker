@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ItemsListView = new System.Windows.Forms.ListView();
             this.ColumnItemName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnItemId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,17 +49,14 @@
             this.ComboBoxPackageItemName = new System.Windows.Forms.ComboBox();
             this.itemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ComboBoxPager = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
             this.ButtonSearchClear = new System.Windows.Forms.Button();
             this.LinkStmol = new System.Windows.Forms.LinkLabel();
             this.LabelBy = new System.Windows.Forms.Label();
-            this.ButtonChangeItemsListView = new System.Windows.Forms.Button();
             this.DEVBUTTON = new System.Windows.Forms.Button();
-            this.ListBoxFiltersTip = new System.Windows.Forms.ListBox();
-            this.PictureBoxMSGrid = new System.Windows.Forms.PictureBox();
             this.PanelMSGrid = new System.Windows.Forms.Panel();
             this.TableLayoutMSList = new MSDesigner.Classes.Controls.DBLayoutPanel();
+            this.PictureBoxPlusBtn = new System.Windows.Forms.PictureBox();
             this.ContextMenuMSItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,26 +66,36 @@
             this.ButtonSaveMSList = new System.Windows.Forms.Button();
             this.ButtonLoadMSFromXML = new System.Windows.Forms.Button();
             this.GroupBoxMultiSell = new System.Windows.Forms.GroupBox();
-            this.LabelXMLExt = new System.Windows.Forms.Label();
-            this.TextBoxMSName = new System.Windows.Forms.TextBox();
             this.CheckBoxMSConfigKeepEnchanted = new System.Windows.Forms.CheckBox();
             this.CheckBoxMSConfigIgnorePrice = new System.Windows.Forms.CheckBox();
             this.CheckBoxMSConfigNoTax = new System.Windows.Forms.CheckBox();
             this.CheckBoxMSConfigShowAll = new System.Windows.Forms.CheckBox();
+            this.LabelXMLExt = new System.Windows.Forms.Label();
+            this.TextBoxMSName = new System.Windows.Forms.TextBox();
             this.TableLayoutPanelMSItem = new System.Windows.Forms.TableLayoutPanel();
-            this.ButtonAddMSItemToMSList = new System.Windows.Forms.Button();
+            this.ButtonAddProductToMSItem = new System.Windows.Forms.Button();
             this.PanelMSItems = new System.Windows.Forms.Panel();
             this.ButtonClearMSItem = new System.Windows.Forms.Button();
             this.ButtonExit = new System.Windows.Forms.Button();
             this.LabelDataPackageDisable = new System.Windows.Forms.Label();
+            this.PictureBoxMSListMid = new System.Windows.Forms.PictureBox();
+            this.PictureBoxMSListImageTop = new System.Windows.Forms.PictureBox();
+            this.PictureBoxAddItem = new System.Windows.Forms.PictureBox();
+            this.PictureBoxMSListBot = new System.Windows.Forms.PictureBox();
+            this.PictureBoxInvChangeView = new System.Windows.Forms.PictureBox();
+            this.ButtonDeleteCurrentMSItem = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSGrid)).BeginInit();
             this.PanelMSGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPlusBtn)).BeginInit();
             this.ContextMenuMSItem.SuspendLayout();
             this.GroupBoxMultiSell.SuspendLayout();
             this.PanelMSItems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListMid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListImageTop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxAddItem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListBot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxInvChangeView)).BeginInit();
             this.SuspendLayout();
             // 
             // ItemsListView
@@ -129,7 +137,7 @@
             // 
             // ButtonNextItemListPage
             // 
-            this.ButtonNextItemListPage.Location = new System.Drawing.Point(244, 4);
+            this.ButtonNextItemListPage.Location = new System.Drawing.Point(257, 633);
             this.ButtonNextItemListPage.Name = "ButtonNextItemListPage";
             this.ButtonNextItemListPage.Size = new System.Drawing.Size(81, 40);
             this.ButtonNextItemListPage.TabIndex = 3;
@@ -139,7 +147,7 @@
             // 
             // ButtonPrevItemListPage
             // 
-            this.ButtonPrevItemListPage.Location = new System.Drawing.Point(0, 4);
+            this.ButtonPrevItemListPage.Location = new System.Drawing.Point(14, 633);
             this.ButtonPrevItemListPage.Name = "ButtonPrevItemListPage";
             this.ButtonPrevItemListPage.Size = new System.Drawing.Size(81, 40);
             this.ButtonPrevItemListPage.TabIndex = 4;
@@ -158,12 +166,13 @@
             this.groupBox1.Controls.Add(this.labelItemId);
             this.groupBox1.Controls.Add(this.labelItemDesc);
             this.groupBox1.Controls.Add(this.labelItemName);
-            this.groupBox1.Location = new System.Drawing.Point(969, 67);
+            this.groupBox1.Location = new System.Drawing.Point(14, 718);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(245, 314);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item details";
+            this.groupBox1.Visible = false;
             // 
             // ButtonCopyItemID
             // 
@@ -270,28 +279,18 @@
             // ComboBoxPager
             // 
             this.ComboBoxPager.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxPager.Location = new System.Drawing.Point(138, 13);
+            this.ComboBoxPager.Location = new System.Drawing.Point(152, 643);
             this.ComboBoxPager.Name = "ComboBoxPager";
             this.ComboBoxPager.Size = new System.Drawing.Size(48, 22);
             this.ComboBoxPager.TabIndex = 10;
             this.ComboBoxPager.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPager_SelectedIndexChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.ButtonPrevItemListPage);
-            this.panel1.Controls.Add(this.ComboBoxPager);
-            this.panel1.Controls.Add(this.ButtonNextItemListPage);
-            this.panel1.Location = new System.Drawing.Point(14, 632);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(325, 48);
-            this.panel1.TabIndex = 11;
             // 
             // TextBoxSearch
             // 
             this.TextBoxSearch.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.TextBoxSearch.Location = new System.Drawing.Point(14, 41);
             this.TextBoxSearch.Name = "TextBoxSearch";
-            this.TextBoxSearch.Size = new System.Drawing.Size(252, 22);
+            this.TextBoxSearch.Size = new System.Drawing.Size(232, 22);
             this.TextBoxSearch.TabIndex = 13;
             this.TextBoxSearch.Text = "ID or Name";
             this.TextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
@@ -301,7 +300,7 @@
             // 
             // ButtonSearchClear
             // 
-            this.ButtonSearchClear.Location = new System.Drawing.Point(272, 40);
+            this.ButtonSearchClear.Location = new System.Drawing.Point(250, 40);
             this.ButtonSearchClear.Name = "ButtonSearchClear";
             this.ButtonSearchClear.Size = new System.Drawing.Size(67, 23);
             this.ButtonSearchClear.TabIndex = 14;
@@ -313,7 +312,7 @@
             // 
             this.LinkStmol.AutoSize = true;
             this.LinkStmol.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LinkStmol.Location = new System.Drawing.Point(1181, 680);
+            this.LinkStmol.Location = new System.Drawing.Point(1005, 683);
             this.LinkStmol.Name = "LinkStmol";
             this.LinkStmol.Size = new System.Drawing.Size(33, 13);
             this.LinkStmol.TabIndex = 15;
@@ -326,25 +325,15 @@
             this.LabelBy.AutoSize = true;
             this.LabelBy.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LabelBy.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.LabelBy.Location = new System.Drawing.Point(1043, 680);
+            this.LabelBy.Location = new System.Drawing.Point(867, 683);
             this.LabelBy.Name = "LabelBy";
             this.LabelBy.Size = new System.Drawing.Size(141, 13);
             this.LabelBy.TabIndex = 16;
             this.LabelBy.Text = "MSDesigner is developed by";
             // 
-            // ButtonChangeItemsListView
-            // 
-            this.ButtonChangeItemsListView.Location = new System.Drawing.Point(970, 13);
-            this.ButtonChangeItemsListView.Name = "ButtonChangeItemsListView";
-            this.ButtonChangeItemsListView.Size = new System.Drawing.Size(119, 50);
-            this.ButtonChangeItemsListView.TabIndex = 17;
-            this.ButtonChangeItemsListView.Text = "Change View";
-            this.ButtonChangeItemsListView.UseVisualStyleBackColor = true;
-            this.ButtonChangeItemsListView.Click += new System.EventHandler(this.ChangeViewInItemList_Click);
-            // 
             // DEVBUTTON
             // 
-            this.DEVBUTTON.Location = new System.Drawing.Point(1139, 642);
+            this.DEVBUTTON.Location = new System.Drawing.Point(838, 13);
             this.DEVBUTTON.Name = "DEVBUTTON";
             this.DEVBUTTON.Size = new System.Drawing.Size(75, 23);
             this.DEVBUTTON.TabIndex = 18;
@@ -352,32 +341,11 @@
             this.DEVBUTTON.UseVisualStyleBackColor = true;
             this.DEVBUTTON.Click += new System.EventHandler(this.DEVBUTTON_CLICK);
             // 
-            // ListBoxFiltersTip
-            // 
-            this.ListBoxFiltersTip.FormattingEnabled = true;
-            this.ListBoxFiltersTip.ItemHeight = 14;
-            this.ListBoxFiltersTip.Location = new System.Drawing.Point(14, 63);
-            this.ListBoxFiltersTip.Name = "ListBoxFiltersTip";
-            this.ListBoxFiltersTip.Size = new System.Drawing.Size(252, 18);
-            this.ListBoxFiltersTip.TabIndex = 19;
-            this.ListBoxFiltersTip.Visible = false;
-            // 
-            // PictureBoxMSGrid
-            // 
-            this.PictureBoxMSGrid.BackgroundImage = global::MSDesigner.Properties.Resources.MS_NoGrid;
-            this.PictureBoxMSGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBoxMSGrid.Location = new System.Drawing.Point(698, 67);
-            this.PictureBoxMSGrid.Name = "PictureBoxMSGrid";
-            this.PictureBoxMSGrid.Size = new System.Drawing.Size(253, 569);
-            this.PictureBoxMSGrid.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.PictureBoxMSGrid.TabIndex = 21;
-            this.PictureBoxMSGrid.TabStop = false;
-            // 
             // PanelMSGrid
             // 
             this.PanelMSGrid.BackColor = System.Drawing.Color.Transparent;
             this.PanelMSGrid.Controls.Add(this.TableLayoutMSList);
-            this.PanelMSGrid.Location = new System.Drawing.Point(713, 116);
+            this.PanelMSGrid.Location = new System.Drawing.Point(403, 69);
             this.PanelMSGrid.Name = "PanelMSGrid";
             this.PanelMSGrid.Size = new System.Drawing.Size(222, 504);
             this.PanelMSGrid.TabIndex = 23;
@@ -396,8 +364,7 @@
             this.TableLayoutMSList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TableLayoutMSList.Location = new System.Drawing.Point(0, 0);
             this.TableLayoutMSList.Name = "TableLayoutMSList";
-            this.TableLayoutMSList.RowCount = 14;
-            this.TableLayoutMSList.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableLayoutMSList.RowCount = 13;
             this.TableLayoutMSList.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableLayoutMSList.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableLayoutMSList.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -414,6 +381,22 @@
             this.TableLayoutMSList.Size = new System.Drawing.Size(222, 504);
             this.TableLayoutMSList.TabIndex = 24;
             this.TableLayoutMSList.Resize += new System.EventHandler(this.TableLayoutMSGrid_Resize);
+            // 
+            // PictureBoxPlusBtn
+            // 
+            this.PictureBoxPlusBtn.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBoxPlusBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PictureBoxPlusBtn.Image = global::MSDesigner.Properties.Resources.PlusBtn;
+            this.PictureBoxPlusBtn.Location = new System.Drawing.Point(275, 718);
+            this.PictureBoxPlusBtn.Name = "PictureBoxPlusBtn";
+            this.PictureBoxPlusBtn.Size = new System.Drawing.Size(20, 20);
+            this.PictureBoxPlusBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxPlusBtn.TabIndex = 34;
+            this.PictureBoxPlusBtn.TabStop = false;
+            this.PictureBoxPlusBtn.Visible = false;
+            this.PictureBoxPlusBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPlusBtn_MouseDown);
+            this.PictureBoxPlusBtn.MouseLeave += new System.EventHandler(this.PictureBoxPlusBtn_MouseLeave);
+            this.PictureBoxPlusBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPlusBtn_MouseMove);
             // 
             // ContextMenuMSItem
             // 
@@ -442,7 +425,7 @@
             // 
             this.ButtonMSGridUp.Enabled = false;
             this.ButtonMSGridUp.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ButtonMSGridUp.Location = new System.Drawing.Point(741, 638);
+            this.ButtonMSGridUp.Location = new System.Drawing.Point(432, 633);
             this.ButtonMSGridUp.Name = "ButtonMSGridUp";
             this.ButtonMSGridUp.Size = new System.Drawing.Size(81, 40);
             this.ButtonMSGridUp.TabIndex = 24;
@@ -454,9 +437,9 @@
             // 
             this.ButtonMSGridDown.Enabled = false;
             this.ButtonMSGridDown.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ButtonMSGridDown.Location = new System.Drawing.Point(828, 638);
+            this.ButtonMSGridDown.Location = new System.Drawing.Point(519, 633);
             this.ButtonMSGridDown.Name = "ButtonMSGridDown";
-            this.ButtonMSGridDown.Size = new System.Drawing.Size(75, 40);
+            this.ButtonMSGridDown.Size = new System.Drawing.Size(81, 40);
             this.ButtonMSGridDown.TabIndex = 24;
             this.ButtonMSGridDown.Text = "↓";
             this.ButtonMSGridDown.UseVisualStyleBackColor = true;
@@ -476,19 +459,18 @@
             // 
             // ButtonSaveMSList
             // 
-            this.ButtonSaveMSList.Enabled = false;
-            this.ButtonSaveMSList.Location = new System.Drawing.Point(41, 172);
+            this.ButtonSaveMSList.Location = new System.Drawing.Point(779, 637);
             this.ButtonSaveMSList.Name = "ButtonSaveMSList";
             this.ButtonSaveMSList.Size = new System.Drawing.Size(162, 32);
             this.ButtonSaveMSList.TabIndex = 26;
             this.ButtonSaveMSList.Text = "Save MultiSell";
             this.ButtonSaveMSList.UseVisualStyleBackColor = true;
-            this.ButtonSaveMSList.Click += new System.EventHandler(this.SaveMSGridToXML_Click);
+            this.ButtonSaveMSList.Click += new System.EventHandler(this.SaveMSListToXML_Click);
             // 
             // ButtonLoadMSFromXML
             // 
             this.ButtonLoadMSFromXML.Enabled = false;
-            this.ButtonLoadMSFromXML.Location = new System.Drawing.Point(41, 206);
+            this.ButtonLoadMSFromXML.Location = new System.Drawing.Point(41, 210);
             this.ButtonLoadMSFromXML.Name = "ButtonLoadMSFromXML";
             this.ButtonLoadMSFromXML.Size = new System.Drawing.Size(162, 32);
             this.ButtonLoadMSFromXML.TabIndex = 26;
@@ -497,38 +479,17 @@
             // 
             // GroupBoxMultiSell
             // 
-            this.GroupBoxMultiSell.Controls.Add(this.LabelXMLExt);
-            this.GroupBoxMultiSell.Controls.Add(this.TextBoxMSName);
             this.GroupBoxMultiSell.Controls.Add(this.CheckBoxMSConfigKeepEnchanted);
             this.GroupBoxMultiSell.Controls.Add(this.CheckBoxMSConfigIgnorePrice);
             this.GroupBoxMultiSell.Controls.Add(this.CheckBoxMSConfigNoTax);
             this.GroupBoxMultiSell.Controls.Add(this.CheckBoxMSConfigShowAll);
             this.GroupBoxMultiSell.Controls.Add(this.ButtonLoadMSFromXML);
-            this.GroupBoxMultiSell.Controls.Add(this.ButtonSaveMSList);
-            this.GroupBoxMultiSell.Location = new System.Drawing.Point(969, 387);
+            this.GroupBoxMultiSell.Location = new System.Drawing.Point(403, 718);
             this.GroupBoxMultiSell.Name = "GroupBoxMultiSell";
-            this.GroupBoxMultiSell.Size = new System.Drawing.Size(245, 249);
+            this.GroupBoxMultiSell.Size = new System.Drawing.Size(257, 249);
             this.GroupBoxMultiSell.TabIndex = 27;
             this.GroupBoxMultiSell.TabStop = false;
             this.GroupBoxMultiSell.Text = "MultiSell";
-            // 
-            // LabelXMLExt
-            // 
-            this.LabelXMLExt.AutoSize = true;
-            this.LabelXMLExt.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.LabelXMLExt.Location = new System.Drawing.Point(205, 143);
-            this.LabelXMLExt.Name = "LabelXMLExt";
-            this.LabelXMLExt.Size = new System.Drawing.Size(29, 14);
-            this.LabelXMLExt.TabIndex = 29;
-            this.LabelXMLExt.Text = ".xml";
-            // 
-            // TextBoxMSName
-            // 
-            this.TextBoxMSName.Location = new System.Drawing.Point(41, 140);
-            this.TextBoxMSName.Name = "TextBoxMSName";
-            this.TextBoxMSName.Size = new System.Drawing.Size(162, 22);
-            this.TextBoxMSName.TabIndex = 28;
-            this.TextBoxMSName.Text = "multisell";
             // 
             // CheckBoxMSConfigKeepEnchanted
             // 
@@ -572,37 +533,54 @@
             this.CheckBoxMSConfigShowAll.Text = "Show All";
             this.CheckBoxMSConfigShowAll.UseVisualStyleBackColor = true;
             // 
+            // LabelXMLExt
+            // 
+            this.LabelXMLExt.AutoSize = true;
+            this.LabelXMLExt.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.LabelXMLExt.Location = new System.Drawing.Point(943, 612);
+            this.LabelXMLExt.Name = "LabelXMLExt";
+            this.LabelXMLExt.Size = new System.Drawing.Size(29, 14);
+            this.LabelXMLExt.TabIndex = 29;
+            this.LabelXMLExt.Text = ".xml";
+            // 
+            // TextBoxMSName
+            // 
+            this.TextBoxMSName.Location = new System.Drawing.Point(779, 609);
+            this.TextBoxMSName.Name = "TextBoxMSName";
+            this.TextBoxMSName.Size = new System.Drawing.Size(162, 22);
+            this.TextBoxMSName.TabIndex = 28;
+            this.TextBoxMSName.Text = "multisell";
+            // 
             // TableLayoutPanelMSItem
             // 
             this.TableLayoutPanelMSItem.AutoSize = true;
             this.TableLayoutPanelMSItem.BackColor = System.Drawing.Color.Transparent;
             this.TableLayoutPanelMSItem.ColumnCount = 1;
-            this.TableLayoutPanelMSItem.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TableLayoutPanelMSItem.Location = new System.Drawing.Point(0, 0);
+            this.TableLayoutPanelMSItem.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
+            this.TableLayoutPanelMSItem.Location = new System.Drawing.Point(2, 0);
+            this.TableLayoutPanelMSItem.Margin = new System.Windows.Forms.Padding(0);
             this.TableLayoutPanelMSItem.Name = "TableLayoutPanelMSItem";
-            this.TableLayoutPanelMSItem.RowCount = 2;
+            this.TableLayoutPanelMSItem.RowCount = 1;
             this.TableLayoutPanelMSItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanelMSItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableLayoutPanelMSItem.Size = new System.Drawing.Size(320, 395);
+            this.TableLayoutPanelMSItem.Size = new System.Drawing.Size(320, 5);
             this.TableLayoutPanelMSItem.TabIndex = 28;
             // 
-            // ButtonAddMSItemToMSList
+            // ButtonAddProductToMSItem
             // 
-            this.ButtonAddMSItemToMSList.Enabled = false;
-            this.ButtonAddMSItemToMSList.Location = new System.Drawing.Point(438, 527);
-            this.ButtonAddMSItemToMSList.Name = "ButtonAddMSItemToMSList";
-            this.ButtonAddMSItemToMSList.Size = new System.Drawing.Size(162, 32);
-            this.ButtonAddMSItemToMSList.TabIndex = 26;
-            this.ButtonAddMSItemToMSList.Text = "Add Item";
-            this.ButtonAddMSItemToMSList.UseVisualStyleBackColor = true;
-            this.ButtonAddMSItemToMSList.Click += new System.EventHandler(this.ButtonAddMSItemToMSGrid_Click);
+            this.ButtonAddProductToMSItem.Location = new System.Drawing.Point(690, 470);
+            this.ButtonAddProductToMSItem.Name = "ButtonAddProductToMSItem";
+            this.ButtonAddProductToMSItem.Size = new System.Drawing.Size(159, 32);
+            this.ButtonAddProductToMSItem.TabIndex = 26;
+            this.ButtonAddProductToMSItem.Text = "New item";
+            this.ButtonAddProductToMSItem.UseVisualStyleBackColor = true;
+            this.ButtonAddProductToMSItem.Click += new System.EventHandler(this.ButtonAddProductToMSItem_Click);
             // 
             // PanelMSItems
             // 
             this.PanelMSItems.AutoScroll = true;
             this.PanelMSItems.BackColor = System.Drawing.Color.Transparent;
             this.PanelMSItems.Controls.Add(this.TableLayoutPanelMSItem);
-            this.PanelMSItems.Location = new System.Drawing.Point(345, 123);
+            this.PanelMSItems.Location = new System.Drawing.Point(688, 69);
             this.PanelMSItems.Name = "PanelMSItems";
             this.PanelMSItems.Size = new System.Drawing.Size(350, 395);
             this.PanelMSItems.TabIndex = 29;
@@ -610,7 +588,7 @@
             // ButtonClearMSItem
             // 
             this.ButtonClearMSItem.Enabled = false;
-            this.ButtonClearMSItem.Location = new System.Drawing.Point(438, 565);
+            this.ButtonClearMSItem.Location = new System.Drawing.Point(666, 730);
             this.ButtonClearMSItem.Name = "ButtonClearMSItem";
             this.ButtonClearMSItem.Size = new System.Drawing.Size(162, 32);
             this.ButtonClearMSItem.TabIndex = 30;
@@ -620,7 +598,7 @@
             // 
             // ButtonExit
             // 
-            this.ButtonExit.Location = new System.Drawing.Point(1095, 13);
+            this.ButtonExit.Location = new System.Drawing.Point(919, 13);
             this.ButtonExit.Name = "ButtonExit";
             this.ButtonExit.Size = new System.Drawing.Size(119, 50);
             this.ButtonExit.TabIndex = 31;
@@ -641,28 +619,112 @@
             this.LabelDataPackageDisable.Text = "Data Package not found";
             this.LabelDataPackageDisable.Visible = false;
             // 
+            // PictureBoxMSListMid
+            // 
+            this.PictureBoxMSListMid.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PictureBoxMSListMid.BackgroundImage")));
+            this.PictureBoxMSListMid.Location = new System.Drawing.Point(388, 80);
+            this.PictureBoxMSListMid.Margin = new System.Windows.Forms.Padding(0);
+            this.PictureBoxMSListMid.Name = "PictureBoxMSListMid";
+            this.PictureBoxMSListMid.Size = new System.Drawing.Size(253, 504);
+            this.PictureBoxMSListMid.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBoxMSListMid.TabIndex = 2;
+            this.PictureBoxMSListMid.TabStop = false;
+            // 
+            // PictureBoxMSListImageTop
+            // 
+            this.PictureBoxMSListImageTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBoxMSListImageTop.Image = ((System.Drawing.Image)(resources.GetObject("PictureBoxMSListImageTop.Image")));
+            this.PictureBoxMSListImageTop.Location = new System.Drawing.Point(388, 13);
+            this.PictureBoxMSListImageTop.Margin = new System.Windows.Forms.Padding(0);
+            this.PictureBoxMSListImageTop.Name = "PictureBoxMSListImageTop";
+            this.PictureBoxMSListImageTop.Size = new System.Drawing.Size(253, 68);
+            this.PictureBoxMSListImageTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxMSListImageTop.TabIndex = 0;
+            this.PictureBoxMSListImageTop.TabStop = false;
+            // 
+            // PictureBoxAddItem
+            // 
+            this.PictureBoxAddItem.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBoxAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PictureBoxAddItem.Image = global::MSDesigner.Properties.Resources.BtnAddItem2;
+            this.PictureBoxAddItem.Location = new System.Drawing.Point(0, 0);
+            this.PictureBoxAddItem.Margin = new System.Windows.Forms.Padding(0);
+            this.PictureBoxAddItem.Name = "PictureBoxAddItem";
+            this.PictureBoxAddItem.Size = new System.Drawing.Size(197, 29);
+            this.PictureBoxAddItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxAddItem.TabIndex = 36;
+            this.PictureBoxAddItem.TabStop = false;
+            this.PictureBoxAddItem.Click += new System.EventHandler(this.PictureBoxAddItem_Click);
+            this.PictureBoxAddItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxAddItem_MouseDown);
+            this.PictureBoxAddItem.MouseLeave += new System.EventHandler(this.PictureBoxAddItem_MouseLeave);
+            this.PictureBoxAddItem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxAddItem_MouseMove);
+            // 
+            // PictureBoxMSListBot
+            // 
+            this.PictureBoxMSListBot.Image = global::MSDesigner.Properties.Resources.MSListBottomBig;
+            this.PictureBoxMSListBot.Location = new System.Drawing.Point(388, 584);
+            this.PictureBoxMSListBot.Name = "PictureBoxMSListBot";
+            this.PictureBoxMSListBot.Size = new System.Drawing.Size(253, 47);
+            this.PictureBoxMSListBot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxMSListBot.TabIndex = 37;
+            this.PictureBoxMSListBot.TabStop = false;
+            // 
+            // PictureBoxInvChangeView
+            // 
+            this.PictureBoxInvChangeView.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBoxInvChangeView.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PictureBoxInvChangeView.Image = global::MSDesigner.Properties.Resources.PostWndList;
+            this.PictureBoxInvChangeView.Location = new System.Drawing.Point(321, 44);
+            this.PictureBoxInvChangeView.Name = "PictureBoxInvChangeView";
+            this.PictureBoxInvChangeView.Size = new System.Drawing.Size(15, 15);
+            this.PictureBoxInvChangeView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxInvChangeView.TabIndex = 39;
+            this.PictureBoxInvChangeView.TabStop = false;
+            this.PictureBoxInvChangeView.Click += new System.EventHandler(this.PictureBoxInvChangeView_Click);
+            this.PictureBoxInvChangeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxInvChangeView_MouseDown);
+            this.PictureBoxInvChangeView.MouseLeave += new System.EventHandler(this.PictureBoxInvChangeView_MouseLeave);
+            this.PictureBoxInvChangeView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxInvChangeView_MouseMove);
+            // 
+            // ButtonDeleteCurrentMSItem
+            // 
+            this.ButtonDeleteCurrentMSItem.Location = new System.Drawing.Point(851, 470);
+            this.ButtonDeleteCurrentMSItem.Name = "ButtonDeleteCurrentMSItem";
+            this.ButtonDeleteCurrentMSItem.Size = new System.Drawing.Size(159, 32);
+            this.ButtonDeleteCurrentMSItem.TabIndex = 26;
+            this.ButtonDeleteCurrentMSItem.Text = "Delete";
+            this.ButtonDeleteCurrentMSItem.UseVisualStyleBackColor = true;
+            this.ButtonDeleteCurrentMSItem.Click += new System.EventHandler(this.ButtonDeleteCurrentMSItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1226, 702);
-            this.Controls.Add(this.LabelDataPackageDisable);
-            this.Controls.Add(this.ButtonExit);
-            this.Controls.Add(this.ButtonClearMSItem);
-            this.Controls.Add(this.LabelCopyright);
+            this.ClientSize = new System.Drawing.Size(1054, 706);
+            this.Controls.Add(this.LabelXMLExt);
+            this.Controls.Add(this.TextBoxMSName);
+            this.Controls.Add(this.PictureBoxInvChangeView);
+            this.Controls.Add(this.ComboBoxPager);
+            this.Controls.Add(this.ButtonPrevItemListPage);
+            this.Controls.Add(this.ButtonNextItemListPage);
             this.Controls.Add(this.PanelMSGrid);
+            this.Controls.Add(this.ButtonSaveMSList);
+            this.Controls.Add(this.PictureBoxPlusBtn);
+            this.Controls.Add(this.PictureBoxMSListImageTop);
+            this.Controls.Add(this.PictureBoxMSListMid);
+            this.Controls.Add(this.LabelDataPackageDisable);
+            this.Controls.Add(this.ButtonMSGridUp);
+            this.Controls.Add(this.ButtonExit);
+            this.Controls.Add(this.PictureBoxMSListBot);
+            this.Controls.Add(this.ButtonClearMSItem);
             this.Controls.Add(this.ButtonMSGridDown);
+            this.Controls.Add(this.LabelCopyright);
             this.Controls.Add(this.PanelMSItems);
-            this.Controls.Add(this.ListBoxFiltersTip);
-            this.Controls.Add(this.ButtonAddMSItemToMSList);
-            this.Controls.Add(this.PictureBoxMSGrid);
+            this.Controls.Add(this.ButtonDeleteCurrentMSItem);
+            this.Controls.Add(this.ButtonAddProductToMSItem);
             this.Controls.Add(this.GroupBoxMultiSell);
             this.Controls.Add(this.ButtonSearchClear);
-            this.Controls.Add(this.ButtonMSGridUp);
-            this.Controls.Add(this.ButtonChangeItemsListView);
             this.Controls.Add(this.TextBoxSearch);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ComboBoxPackageItemName);
             this.Controls.Add(this.ItemsListView);
             this.Controls.Add(this.DEVBUTTON);
@@ -678,15 +740,19 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).EndInit();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSGrid)).EndInit();
             this.PanelMSGrid.ResumeLayout(false);
             this.PanelMSGrid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxPlusBtn)).EndInit();
             this.ContextMenuMSItem.ResumeLayout(false);
             this.GroupBoxMultiSell.ResumeLayout(false);
             this.GroupBoxMultiSell.PerformLayout();
             this.PanelMSItems.ResumeLayout(false);
             this.PanelMSItems.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListMid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListImageTop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxAddItem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxMSListBot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxInvChangeView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -708,7 +774,6 @@
         private System.Windows.Forms.BindingSource itemBindingSource;
         private System.Windows.Forms.ImageList ItemsIconList;
         private System.Windows.Forms.ComboBox ComboBoxPager;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox TextBoxItemParams;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TextBoxSearch;
@@ -717,10 +782,7 @@
         private System.Windows.Forms.Label LabelBy;
         private System.Windows.Forms.ColumnHeader ColumnItemName;
         private System.Windows.Forms.ColumnHeader ColumnItemId;
-        private System.Windows.Forms.Button ButtonChangeItemsListView;
         private System.Windows.Forms.Button DEVBUTTON;
-        private System.Windows.Forms.ListBox ListBoxFiltersTip;
-        private System.Windows.Forms.PictureBox PictureBoxMSGrid;
         private System.Windows.Forms.Panel PanelMSGrid;
         private Classes.Controls.DBLayoutPanel TableLayoutMSList;
         private System.Windows.Forms.ContextMenuStrip ContextMenuMSItem;
@@ -738,13 +800,20 @@
         private System.Windows.Forms.CheckBox CheckBoxMSConfigNoTax;
         private System.Windows.Forms.CheckBox CheckBoxMSConfigShowAll;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMSItem;
-        private System.Windows.Forms.Button ButtonAddMSItemToMSList;
+        private System.Windows.Forms.Button ButtonAddProductToMSItem;
         private System.Windows.Forms.Panel PanelMSItems;
         private System.Windows.Forms.Button ButtonClearMSItem;
         private System.Windows.Forms.TextBox TextBoxMSName;
         private System.Windows.Forms.Label LabelXMLExt;
         private System.Windows.Forms.Button ButtonExit;
         private System.Windows.Forms.Label LabelDataPackageDisable;
+        private System.Windows.Forms.PictureBox PictureBoxPlusBtn;
+        private System.Windows.Forms.PictureBox PictureBoxMSListImageTop;
+        private System.Windows.Forms.PictureBox PictureBoxMSListMid;
+        private System.Windows.Forms.PictureBox PictureBoxAddItem;
+        private System.Windows.Forms.PictureBox PictureBoxMSListBot;
+        private System.Windows.Forms.PictureBox PictureBoxInvChangeView;
+        private System.Windows.Forms.Button ButtonDeleteCurrentMSItem;
 
     }
 }

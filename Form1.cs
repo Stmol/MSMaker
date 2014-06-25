@@ -25,7 +25,7 @@ namespace MSDesigner
         private List<L2Item.List> _itemsLists;
 
         private MultiSell::List _msList;
-        private MultiSell::MSItem _currentMSItem;
+        private MultiSell::Item _currentMSItem;
 
         public Form1()
         {
@@ -39,12 +39,11 @@ namespace MSDesigner
             // Init
             this._package = DataPackage::Package.ReadConfigFile("package.json");
             this._msList = new MultiSell.List();
+            this._itemsLists = new List<L2Item.List>();
 
             // If defined some items
             if (this._package != null && this._package.Items.Count > 0)
             {
-                this._itemsLists = new List<L2Item.List>();
-
                 L2Item.List allItems = new L2Item.List() { Name = "All" };
                 allItems.Items = new List<L2Item.Item>();
 
@@ -82,8 +81,6 @@ namespace MSDesigner
 
         private void DisplayItemsInListView(int start)
         {
-            Debug.WriteLine("Display items");
-
             this.ItemsListView.Items.Clear();
             this.ItemsListView.LargeImageList.Images.Clear();
 
@@ -106,9 +103,13 @@ namespace MSDesigner
             this.ButtonSearchClear.Enabled = false;
 
             // Other controls
-            this.ButtonChangeItemsListView.Enabled = false;
+            this.PictureBoxInvChangeView.Enabled = false;
             this.ItemsListView.Enabled = false;
             this.LabelDataPackageDisable.Visible = true;
+
+            // OMG: Search other way to do it (Button add item to MSList)
+            this.PictureBoxAddItem.Parent = this.PictureBoxMSListBot;
+            this.PictureBoxAddItem.Location = new Point((this.PictureBoxMSListBot.Width / 2) - (this.PictureBoxAddItem.Width / 2), 0);
             #endregion
 
             // If DataPackage loaded
@@ -125,7 +126,7 @@ namespace MSDesigner
                 this.ComboBoxPackageItemName.DataSource = this._itemsLists;
                 this.ComboBoxPackageItemName.Enabled = true;
 
-                this.ButtonChangeItemsListView.Enabled = true;
+                this.PictureBoxInvChangeView.Enabled = true;
                 this.ItemsListView.Enabled = true;
             }
         }
@@ -230,7 +231,7 @@ namespace MSDesigner
             this.TextBoxSearch.Text = "ID or Name";
         }
 
-        private void AddItemToMS(MultiSell::MSItem msItem)
+        public void AddMSItemToMSList(MultiSell::Item msItem)
         {
             MSDesignerContorls::MSItemPictureBox itemIcon = new MSDesignerContorls::MSItemPictureBox
             {
@@ -240,10 +241,13 @@ namespace MSDesigner
                 Cursor = Cursors.Hand,
                 ContextMenuStrip = this.ContextMenuMSItem,
                 MSItem = msItem,
-                Image = msItem.productions[0].GetIconImage(this._package.Icons)
+                BackgroundImage = Properties.Resources.no_icon
             };
 
-            itemIcon.Click += new EventHandler(this.PictureBoxInMSList_Click);
+            if (msItem.productions[0].Icon != null && this._package != null)
+                itemIcon.BackgroundImage = msItem.productions[0].GetIconImage(this._package.Icons);
+
+            itemIcon.Click += PictureBoxInMSList_Click;
 
             this._msList.Items.Add(msItem);
             this.TableLayoutMSList.Controls.Add(itemIcon);
@@ -252,28 +256,19 @@ namespace MSDesigner
         private void PictureBoxInMSList_Click(object sender, EventArgs e)
         {
             MSDesignerContorls::MSItemPictureBox msItemPictureBox = sender as MSDesignerContorls::MSItemPictureBox;
-
-            this.EditMSItemFromMSList(msItemPictureBox.MSItem);
+            this._currentMSItem = msItemPictureBox.MSItem;
+            this.ShowCurrentMSItem();
         }
 
         private void ItemsListView_DoubleClick(object sender, EventArgs e)
         {
             MSDesignerContorls::ListViewItem lvi = (MSDesignerContorls::ListViewItem)this.ItemsListView.SelectedItems[0];
 
-            MultiSell::L2Item l2Item = new MultiSell.L2Item()
-            {
-                Id = lvi.Item.Id,
-                Name = lvi.Item.Name,
-                Count = 1,
-                Icon = lvi.Item.Icon
-            };
+            MultiSell.Product msProduct = MultiSell.Product.CreateProductFromL2Item(lvi.Item);
 
-            MSDesignerContorls::MSItemView msItemView = new MSDesignerContorls::MSItemView(
-                l2Item, 
-                l2Item.GetIconImage(this._package.Icons),
-                this.RemoveL2ItemFromMSItem);
-
-            this.TableLayoutPanelMSItem.Controls.Add(msItemView);
+            MultiSell.Item msItem = new MultiSell.Item();
+            msItem.AddProductToProductions(msProduct);
+            this.AddMSItemToMSList(msItem);
         }
 
         private void RemoveMSItemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -281,8 +276,8 @@ namespace MSDesigner
             this._msList.Items.Remove(((MSDesignerContorls::MSItemPictureBox)this.ContextMenuMSItem.SourceControl).MSItem);
             this._currentMSItem = null;
 
-            this.ButtonAddMSItemToMSList.Text = "Add Item";
-            this.ButtonAddMSItemToMSList.Enabled = false;
+            this.ButtonAddProductToMSItem.Text = "Add Item";
+            this.ButtonAddProductToMSItem.Enabled = false;
 
             this.TableLayoutPanelMSItem.Controls.Clear();
             this.TableLayoutMSList.Controls.Remove(this.ContextMenuMSItem.SourceControl);
@@ -292,7 +287,7 @@ namespace MSDesigner
          * Save MS List to XML file
          *
          */
-        private void SaveMSGridToXML_Click(object sender, EventArgs e)
+        private void SaveMSListToXML_Click(object sender, EventArgs e)
         {
             if (this._msList.Items.Count < 1)
             {
@@ -310,7 +305,8 @@ namespace MSDesigner
             this._msList.Config.IgnorePrice = this.CheckBoxMSConfigIgnorePrice.Checked ? true : false;
             this._msList.Config.KeepEnchanted = this.CheckBoxMSConfigKeepEnchanted.Checked ? true : false;
 
-            XmlSerializer serializer = new XmlSerializer(typeof(MultiSell::List));
+            //XmlSerializer serializer = new XmlSerializer(typeof(MultiSell::List));
+            XmlSerializer serializer = XmlSerializer.FromTypes(new[] { typeof(MultiSell::List) })[0];
 
             using (TextWriter writer = new StreamWriter(string.Format("{0}.xml", this.TextBoxMSName.Text)))
             {
@@ -331,17 +327,17 @@ namespace MSDesigner
             }
 
             if (this._currentMSItem == null)
-                this._currentMSItem = new MultiSell.MSItem();
+                this._currentMSItem = new MultiSell.Item();
 
             this._currentMSItem.ingredients.Clear();
             this._currentMSItem.productions.Clear();
 
             foreach (Control msItemView in this.TableLayoutPanelMSItem.Controls)
             {
-                L2Item::Item item = ((MSDesignerContorls::MSItemView)msItemView).Item;
-                decimal count = ((MSDesignerContorls::MSItemView)msItemView).NumericUpDownItemCount.Value;
+                L2Item::Item item = ((MSDesignerContorls::MSProductView)msItemView).Item;
+                decimal count = ((MSDesignerContorls::MSProductView)msItemView).NumericUpDownItemCount.Value;
 
-                MultiSell::L2Item l2Item = new MultiSell.L2Item()
+                MultiSell::Product l2Item = new MultiSell.Product()
                 {
                     Id = item.Id,
                     Name = item.Name,
@@ -349,7 +345,7 @@ namespace MSDesigner
                     Icon = item.Icon
                 };
 
-                if (((MSDesignerContorls::MSItemView)msItemView).CheckBoxIsIngredient.Checked)
+                if (((MSDesignerContorls::MSProductView)msItemView).CheckBoxIsIngredient.Checked)
                     this._currentMSItem.ingredients.Add(l2Item);
                 else
                     this._currentMSItem.productions.Add(l2Item);
@@ -370,19 +366,19 @@ namespace MSDesigner
             if (this._msList.Items.Contains(this._currentMSItem))
                 this.EditMSItemAtMS(this._currentMSItem);
             else
-                this.AddItemToMS(this._currentMSItem);
+                this.AddMSItemToMSList(this._currentMSItem);
 
             this._currentMSItem = null;
 
-            this.ButtonAddMSItemToMSList.Text = "Add Item";
-            this.ButtonAddMSItemToMSList.Enabled = false;
+            this.ButtonAddProductToMSItem.Text = "Add Item";
+            this.ButtonAddProductToMSItem.Enabled = false;
             this.TableLayoutPanelMSItem.Controls.Clear();
         }
 
         /**
          * Edit MS Item from MS List
          */
-        private void EditMSItemAtMS(MultiSell::MSItem msItem)
+        private void EditMSItemAtMS(MultiSell::Item msItem)
         {
             // TODO: Omfg place!
             foreach (MSDesignerContorls::MSItemPictureBox msItemPictureBox in this.TableLayoutMSList.Controls)
@@ -395,35 +391,123 @@ namespace MSDesigner
             }
         }
 
-        private void EditMSItemFromMSList(MultiSell::MSItem msItem)
+        private void ShowCurrentMSItem()
         {
             this.TableLayoutPanelMSItem.Controls.Clear();
-            this.ButtonAddMSItemToMSList.Text = "Save Item";
 
-            this._currentMSItem = msItem;
+            if (this._currentMSItem == null)
+                return;
 
-            foreach (MultiSell::L2Item l2Item in msItem.productions)
+            this._currentMSItem.productions.ForEach(i =>
             {
-                MSDesignerContorls::MSItemView msItemView = new MSDesignerContorls::MSItemView(
-                    l2Item,
-                    l2Item.GetIconImage(this._package.Icons),
-                    this.RemoveL2ItemFromMSItem);
+                Image itemImage = (this._package == null) ? Properties.Resources.no_icon : i.GetIconImage(this._package.Icons);
+                
+                MSDesignerContorls::MSProductView msItemView = new MSDesignerContorls.MSProductView(i, itemImage);
+                msItemView.LableItemRemove.Click += RemoveL2ItemFromMSItem;
 
                 this.TableLayoutPanelMSItem.Controls.Add(msItemView);
-            }
+            });
 
-            // TODO: Dirty place - look at code above
-            foreach (MultiSell::L2Item l2Item in msItem.ingredients)
+            this._currentMSItem.ingredients.ForEach(i =>
             {
-                MSDesignerContorls::MSItemView msItemView = new MSDesignerContorls::MSItemView(
-                    l2Item,
-                    l2Item.GetIconImage(this._package.Icons),
-                    this.RemoveL2ItemFromMSItem);
+                Image itemImage = (this._package == null) ? Properties.Resources.no_icon : i.GetIconImage(this._package.Icons);
 
-                msItemView.CheckBoxIsIngredient.Checked = true;
+                MSDesignerContorls::MSProductView msItemView = new MSDesignerContorls.MSProductView(i, itemImage);
+                msItemView.LableItemRemove.Click += RemoveL2ItemFromMSItem;
 
                 this.TableLayoutPanelMSItem.Controls.Add(msItemView);
+            });
+        }
+
+        private void EditMSItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSDesignerContorls::MSItemPictureBox msItemPictureBox = (MSDesignerContorls::MSItemPictureBox)this.ContextMenuMSItem.SourceControl;
+            this._currentMSItem = msItemPictureBox.MSItem;
+            this.ShowCurrentMSItem();
+        }
+
+        public MultiSell::Product CreateMSProduct(int id, decimal count = 1)
+        {
+            if (this._package != null)
+            {
+                L2Item.Item l2item = this._itemsLists[0].Items.Find(i => i.Id == id);
+
+                if (l2item != null)
+                {
+                    MultiSell::Product msProduct = MultiSell::Product.CreateProductFromL2Item(l2item);
+                    msProduct.Count = count;
+
+                    return msProduct;
+                }
             }
+
+            return new MultiSell.Product
+            {
+                Id = id,
+                Count = count
+            };
+        }
+
+        private void ButtonDeleteCurrentMSItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentMSItem();
+            this.TableLayoutPanelMSItem.Controls.Clear();
+        }
+
+        private void RemoveCurrentMSItem()
+        {
+            if (this._currentMSItem == null) return;
+
+            foreach (MSDesignerContorls.MSItemPictureBox p in this.TableLayoutMSList.Controls)
+            {
+                if (p.MSItem == this._currentMSItem)
+                    this.TableLayoutMSList.Controls.Remove(p);
+            }
+
+            this._msList.Items.Remove(this._currentMSItem);
+            this._currentMSItem = null;
+        }
+
+        private void ButtonAddProductToMSItem_Click(object sender, EventArgs e)
+        {
+            MSItemForm msForm = new MSItemForm(this.CreateMSProduct, this.AddProductToCurrentMSItem);
+            msForm.Location = new Point((this.Location.X + (this.Width / 2)) - (msForm.Width / 2), (this.Location.Y + (this.Height / 2)) - (msForm.Height / 2));
+            msForm.Show();
+        }
+
+        public void AddProductToCurrentMSItem(MultiSell.Product product)
+        {
+            if (this._currentMSItem == null)
+                return;
+
+            MSDesignerContorls.MSProductView productView = new MSDesignerContorls.MSProductView(
+                product,
+                (this._package == null) ? Properties.Resources.no_icon : product.GetIconImage(this._package.Icons)
+            );
+
+            productView.LableItemRemove.Click += RemoveL2ItemFromMSItem;
+
+            this._currentMSItem.AddProductToProductions(product);
+            this.TableLayoutPanelMSItem.Controls.Add(productView);
+        }
+
+        private void RemoveL2ItemFromMSItem(object sender, EventArgs e)
+        {
+            this.TableLayoutPanelMSItem.Controls.Remove(((Label)sender).Parent);
+
+            if (this.TableLayoutPanelMSItem.Controls.Count < 1)
+                this.RemoveCurrentMSItem();
+        }
+
+        #endregion
+
+        #region Distractions events
+
+        private void PictureBoxAddItem_Click(object sender, EventArgs e)
+        {
+            MSItemForm msForm = new MSItemForm(this.CreateMSProduct, this.AddMSItemToMSList);
+            msForm.Location = new Point((this.Location.X + (this.Width / 2)) - (msForm.Width / 2), (this.Location.Y + (this.Height / 2)) - (msForm.Height / 2));
+            msForm.Show();
         }
 
         private void ButtonClearMSItem_Click(object sender, EventArgs e)
@@ -432,16 +516,6 @@ namespace MSDesigner
             // TODO: Bug
             //this.PanelMSItems.VerticalScroll.Visible = false;
         }
-
-        private void EditMSItemToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MSDesignerContorls::MSItemPictureBox msItemPictureBox = (MSDesignerContorls::MSItemPictureBox)this.ContextMenuMSItem.SourceControl;
-            this.EditMSItemFromMSList(msItemPictureBox.MSItem);
-        }
-
-        #endregion
-
-        #region Distractions events
 
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
         {
@@ -487,11 +561,6 @@ namespace MSDesigner
                 this.ButtonMSGridDown.Enabled = true;
         }
 
-        private void RemoveL2ItemFromMSItem(object sender, EventArgs e)
-        {
-            this.TableLayoutPanelMSItem.Controls.Remove(((Label)sender).Parent);
-        }
-
         // TODO: Refactor
         private void TextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -509,9 +578,28 @@ namespace MSDesigner
         // HACK: Dev env
         private void DEVBUTTON_CLICK(object sender, EventArgs e)
         {
-            ItemDetails itemDetailsForm = new ItemDetails();
-            itemDetailsForm.Show();
-            itemDetailsForm.Location = new Point(DEVBUTTON.Left, DEVBUTTON.Top);
+            Image itemImage = Properties.Resources.no_icon;
+            MSDesignerContorls::MSProductView msItemView = new MSDesignerContorls.MSProductView(this._currentMSItem.productions[0], itemImage);
+
+            this.TableLayoutPanelMSItem.Controls.Add(msItemView);
+
+            //ItemDetails itemDetailsForm = new ItemDetails();
+            //itemDetailsForm.Show();
+            //itemDetailsForm.Location = new Point(DEVBUTTON.Left, DEVBUTTON.Top);
+
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    MSDesignerContorls::MSItemPictureBox itemIcon = new MSDesignerContorls::MSItemPictureBox
+            //    {
+            //        Size = new Size(32, 32),
+            //        Location = new Point(0, 0),
+            //        Margin = new System.Windows.Forms.Padding(2, 1, 3, 3),
+            //        Cursor = Cursors.Hand,
+            //        Image = this._currentList.Items[i].GetIconImage(this._package.Icons)
+            //    };
+
+            //    this.TableLayoutMSList.Controls.Add(itemIcon);
+            //}
         }
 
         private void TextBoxSearch_Leave(object sender, EventArgs e)
@@ -544,13 +632,13 @@ namespace MSDesigner
         // HACK: Remove tests!
         private void button1_Click(object sender, EventArgs e)
         {
-            //var filteredItems = from L2Item::Item item in this._currentList.Items
+            //var filteredItems = from Product::Item item in this._currentList.Items
             //                    where item.Id == 1000
             //                    select item;
 
             //this._currentList.Items.Clear();
 
-            //foreach (L2Item::Item item in filteredItems)
+            //foreach (Product::Item item in filteredItems)
             //{
             //    Debug.WriteLine(item.Name);
             //    this._currentList.Items.Add(item);
@@ -571,7 +659,7 @@ namespace MSDesigner
             this.ClearSearchQuery();
         }
 
-        private void ChangeViewInItemList_Click(object sender, EventArgs e)
+        private void PictureBoxInvChangeView_Click(object sender, EventArgs e)
         {
             if (this.ItemsListView.View == View.Details)
             {
@@ -589,29 +677,29 @@ namespace MSDesigner
 
         void TableLayoutMSList_ControlRemoved(object sender, ControlEventArgs e)
         {
-            if (this._msList.Items.Count < 1)
-                this.ButtonSaveMSList.Enabled = false;
+            //if (this._msList.Items.Count < 1)
+            //    this.ButtonSaveMSList.Enabled = false;
         }
 
         void TableLayoutMSList_ControlAdded(object sender, ControlEventArgs e)
         {
-            if (this._msList.Items.Count > 0)
-                this.ButtonSaveMSList.Enabled = true;
+            //if (this._msList.Items.Count > 0)
+            //    this.ButtonSaveMSList.Enabled = true;
         }
 
         void TableLayoutPanelMSItem_ControlRemoved(object sender, ControlEventArgs e)
         {
-            if (this.TableLayoutPanelMSItem.Controls.Count < 1)
-                this.ButtonClearMSItem.Enabled = false;
+            //if (this.TableLayoutPanelMSItem.Controls.Count < 1)
+            //    this.ButtonClearMSItem.Enabled = false;
         }
 
         void TableLayoutPanelMSItem_ControlAdded(object sender, ControlEventArgs e)
         {
-            if (this.TableLayoutPanelMSItem.Controls.Count > 0)
-            {
-                this.ButtonAddMSItemToMSList.Enabled = true;
-                this.ButtonClearMSItem.Enabled = true;
-            }
+            //if (this.TableLayoutPanelMSItem.Controls.Count > 0)
+            //{
+            //    this.ButtonAddMSItemToMSList.Enabled = true;
+            //    this.ButtonClearMSItem.Enabled = true;
+            //}
         }
 
         void ComboBoxListName_SelectedIndexChanged(object sender, EventArgs e)
@@ -634,6 +722,53 @@ namespace MSDesigner
             this.Close();
         }
 
+        #endregion
+
+        #region Visual Effects
+        private void PictureBoxPlusBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxPlusBtn.Image = Properties.Resources.PlusBtnOver;
+        }
+
+        private void PictureBoxPlusBtn_MouseLeave(object sender, EventArgs e)
+        {
+            this.PictureBoxPlusBtn.Image = Properties.Resources.PlusBtn;
+        }
+
+        private void PictureBoxPlusBtn_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxPlusBtn.Image = Properties.Resources.PlusBtnDown;
+        }
+
+        private void PictureBoxAddItem_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxAddItem.Image = Properties.Resources.BtnAddItemOver2;
+        }
+
+        private void PictureBoxAddItem_MouseLeave(object sender, EventArgs e)
+        {
+            this.PictureBoxAddItem.Image = Properties.Resources.BtnAddItem2;
+        }
+
+        private void PictureBoxAddItem_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxAddItem.Image = Properties.Resources.BtnAddItemDown2;
+        }
+
+        private void PictureBoxInvChangeView_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxInvChangeView.Image = Properties.Resources.PostWndList_Over;
+        }
+
+        private void PictureBoxInvChangeView_MouseLeave(object sender, EventArgs e)
+        {
+            this.PictureBoxInvChangeView.Image = Properties.Resources.PostWndList;
+        }
+
+        private void PictureBoxInvChangeView_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.PictureBoxInvChangeView.Image = Properties.Resources.PostWndList_Down;
+        }
         #endregion
     }
 }

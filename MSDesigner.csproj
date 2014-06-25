@@ -41,6 +41,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>
     </DocumentationFile>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -76,14 +77,20 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Controls\ListViewItem.cs" />
+    <Compile Include="Classes\Controls\MSProductForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Controls\MSProductForm.Designer.cs">
+      <DependentUpon>MSProductForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Controls\MSItemPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\Controls\MSItemView.cs">
+    <Compile Include="Classes\Controls\MSProductView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Classes\Controls\MSItemView.Designer.cs">
-      <DependentUpon>MSItemView.cs</DependentUpon>
+    <Compile Include="Classes\Controls\MSProductView.Designer.cs">
+      <DependentUpon>MSProductView.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\DataPackage\Author.cs" />
     <Compile Include="Classes\DataPackage\Package.cs" />
@@ -91,9 +98,9 @@
     <Compile Include="Classes\DataPackage\Item.cs" />
     <Compile Include="Classes\DataPackage\ItemsList.cs" />
     <Compile Include="Classes\L2Item\List.cs" />
-    <Compile Include="Classes\MultiSell\MSConfig.cs" />
-    <Compile Include="Classes\MultiSell\MSItem.cs" />
-    <Compile Include="Classes\MultiSell\L2Item.cs" />
+    <Compile Include="Classes\MultiSell\Config.cs" />
+    <Compile Include="Classes\MultiSell\Item.cs" />
+    <Compile Include="Classes\MultiSell\Product.cs" />
     <Compile Include="Classes\MultiSell\List.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -108,10 +115,19 @@
     <Compile Include="ItemDetails.Designer.cs">
       <DependentUpon>ItemDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="MSItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MSItemForm.Designer.cs">
+      <DependentUpon>MSItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Classes\Controls\MSItemView.resx">
-      <DependentUpon>MSItemView.cs</DependentUpon>
+    <EmbeddedResource Include="Classes\Controls\MSProductForm.resx">
+      <DependentUpon>MSProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Controls\MSProductView.resx">
+      <DependentUpon>MSProductView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -119,22 +135,25 @@
     <EmbeddedResource Include="ItemDetails.resx">
       <DependentUpon>ItemDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MSItemForm.resx">
+      <DependentUpon>MSItemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\DataSources\Item.datasource" />
     <None Include="Properties\DataSources\MSDesigner.Classes.DPackage.Item.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -167,9 +186,6 @@
     <EmbeddedResource Include="Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\no_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\SlotBox_3x2.png" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +199,90 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\GridLineTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlusBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlusBtnDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlusBtnOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnItemDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnItemOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MSListBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MSListMidWide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MSListTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItemDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItemHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MSListBottomBig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItemOver2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItemDown2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAddItem2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\no_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnInvViewDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnInvViewOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnInvView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PostWndList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PostWndList_Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PostWndList_Over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WindowNewItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnSubmit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnSubmitOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SubmitBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnSubmitDown.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

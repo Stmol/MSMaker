@@ -5,30 +5,31 @@ using System.Windows.Forms;
 
 namespace MSDesigner.Classes.Controls
 {
-    public partial class MSItemView : UserControl
+    public partial class MSProductView : UserControl
     {
-        public MultiSell.L2Item Item { get; private set; }
-        public delegate void RemoveCallback(object sender, EventArgs e);
+        public MultiSell.Product Item { get; set; }
+        public Image ItemImage { get; set; }
 
-        private Image _itemImage;
+        //public delegate void RemoveCallback(object sender, EventArgs e);
 
-        public MSItemView(MultiSell.L2Item item, Image itemImage, RemoveCallback removeCallback)
+
+        public MSProductView(MultiSell.Product item, Image itemImage)
         {
             InitializeComponent();
 
             this.Item = item;
-            this._itemImage = itemImage;
+            this.ItemImage = itemImage;
 
-            this.LableItemRemove.Click += new System.EventHandler(removeCallback);
             this.LoadItemToForm();
+            //this.LableItemRemove.Click += new System.EventHandler(removeCallback);
         }
 
         private void LoadItemToForm()
         {
-            this.LabelItemName.Text = this.Item.Name;
+            this.LabelItemName.Text = (this.Item.Name != null) ? this.Item.Name : this.Item.Id.ToString();
             this.LabelItemID.Text = this.Item.Id.ToString();
             this.NumericUpDownItemCount.Value = this.Item.Count;
-            this.PictureBoxItemIcon.Image = this._itemImage;
+            this.PictureBoxItemIcon.Image = this.ItemImage;
         }
 
         private void CheckBoxIsIngredient_CheckedChanged(object sender, EventArgs e)

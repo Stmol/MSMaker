@@ -2,7 +2,7 @@
 
 namespace MSDesigner.Classes.MultiSell
 {
-    public class MSConfig
+    public class Config
     {
         [XmlAttribute("showall")]
         public bool ShowAll { get; set; }
@@ -16,7 +16,7 @@ namespace MSDesigner.Classes.MultiSell
         [XmlAttribute("keepenchanted")]
         public bool KeepEnchanted { get; set; }
 
-        public MSConfig()
+        public Config()
         {
             this.ShowAll = false;
             this.NoTax = false;

@@ -1,6 +1,6 @@
 ﻿namespace MSDesigner.Classes.Controls
 {
-    partial class MSItemView
+    partial class MSProductView
     {
         /// <summary> 
         /// Required designer variable.
@@ -41,7 +41,7 @@
             // LabelItemName
             // 
             this.LabelItemName.AutoEllipsis = true;
-            this.LabelItemName.Location = new System.Drawing.Point(51, 15);
+            this.LabelItemName.Location = new System.Drawing.Point(50, 17);
             this.LabelItemName.MaximumSize = new System.Drawing.Size(115, 15);
             this.LabelItemName.Name = "LabelItemName";
             this.LabelItemName.Size = new System.Drawing.Size(115, 15);
@@ -52,7 +52,7 @@
             // 
             this.CheckBoxIsIngredient.AutoSize = true;
             this.CheckBoxIsIngredient.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.CheckBoxIsIngredient.Location = new System.Drawing.Point(165, 36);
+            this.CheckBoxIsIngredient.Location = new System.Drawing.Point(165, 38);
             this.CheckBoxIsIngredient.Name = "CheckBoxIsIngredient";
             this.CheckBoxIsIngredient.Size = new System.Drawing.Size(83, 18);
             this.CheckBoxIsIngredient.TabIndex = 2;
@@ -63,8 +63,9 @@
             // LabelItemID
             // 
             this.LabelItemID.AutoSize = true;
-            this.LabelItemID.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.LabelItemID.Location = new System.Drawing.Point(51, 35);
+            this.LabelItemID.BackColor = System.Drawing.Color.Transparent;
+            this.LabelItemID.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.LabelItemID.Location = new System.Drawing.Point(50, 34);
             this.LabelItemID.MaximumSize = new System.Drawing.Size(120, 0);
             this.LabelItemID.Name = "LabelItemID";
             this.LabelItemID.Size = new System.Drawing.Size(19, 14);
@@ -73,7 +74,7 @@
             // 
             // NumericUpDownItemCount
             // 
-            this.NumericUpDownItemCount.Location = new System.Drawing.Point(164, 10);
+            this.NumericUpDownItemCount.Location = new System.Drawing.Point(164, 12);
             this.NumericUpDownItemCount.Maximum = new decimal(new int[] {
             1410065407,
             2,
@@ -101,7 +102,7 @@
             this.LableItemRemove.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LableItemRemove.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LableItemRemove.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LableItemRemove.Location = new System.Drawing.Point(253, 37);
+            this.LableItemRemove.Location = new System.Drawing.Point(253, 39);
             this.LableItemRemove.Name = "LableItemRemove";
             this.LableItemRemove.Size = new System.Drawing.Size(51, 14);
             this.LableItemRemove.TabIndex = 6;
@@ -110,9 +111,11 @@
             // PictureBoxItemIcon
             // 
             this.PictureBoxItemIcon.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.PictureBoxItemIcon.Location = new System.Drawing.Point(12, 15);
+            this.PictureBoxItemIcon.Image = global::MSDesigner.Properties.Resources.no_icon;
+            this.PictureBoxItemIcon.Location = new System.Drawing.Point(12, 16);
             this.PictureBoxItemIcon.Name = "PictureBoxItemIcon";
-            this.PictureBoxItemIcon.Size = new System.Drawing.Size(37, 34);
+            this.PictureBoxItemIcon.Size = new System.Drawing.Size(32, 32);
+            this.PictureBoxItemIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.PictureBoxItemIcon.TabIndex = 0;
             this.PictureBoxItemIcon.TabStop = false;
             // 
@@ -128,6 +131,7 @@
             this.Controls.Add(this.LabelItemName);
             this.Controls.Add(this.PictureBoxItemIcon);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.Name = "MSItemView";
             this.Size = new System.Drawing.Size(320, 65);
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownItemCount)).EndInit();

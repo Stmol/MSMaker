@@ -127,10 +127,88 @@
   <data name="MS_NoGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bgms-nogrid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GridLineTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GridLineTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlusBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusBtnDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlusBtnDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusBtnOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlusBtnOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnItem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnItemDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnItemDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnItemOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnItemOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MSListBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MSListBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MSListMidWide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MSListMidWide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MSListTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MSListTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItemDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItemDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItemHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItemHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MSListBottomBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MSListBottomBig.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItem2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItem2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItemDown2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItemDown2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAddItemOver2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAddItemOver2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="no_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\no_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GridLineTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GridLineTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BtnInvView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnInvView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnInvViewDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnInvViewDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnInvViewOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnInvViewOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PostWndList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PostWndList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PostWndList_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PostWndList_Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PostWndList_Over" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PostWndList_Over.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WindowNewItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowNewItem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSubmit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnSubmit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSubmitOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnSubmitOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnSubmitDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnSubmitDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

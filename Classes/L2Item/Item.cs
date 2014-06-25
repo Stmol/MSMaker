@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.IO;
+using System.Diagnostics;
 
 namespace MSDesigner.Classes.L2Item
 {
@@ -38,6 +39,9 @@ namespace MSDesigner.Classes.L2Item
         /// <returns>Image object</returns>
         public Image GetIconImage(string pathToIcons, string iconFormat = "png")
         {
+            if (this.Icon == "" || this.Icon == null)
+                return Properties.Resources.no_icon;
+
             string path = string.Format(@"{0}\{1}.{2}", pathToIcons, this.Icon, iconFormat);
 
             if (File.Exists(path))
