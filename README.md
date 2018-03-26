@@ -16,5 +16,3 @@ Windows 7, Vista or XP with installed .NET Framework 4.0
 
  Just unzip Data Package into the same directory as MSMaker.
  
-###Download
-[msmaker.stmol.me](http://msmaker.stmol.me)
